@@ -22,37 +22,16 @@ public class AuthService {
 
     @Transactional
     public void signup(SignupRequest request) {
-        if (memberRepository.existsByUsername(request.getUsername())) {
-            throw new IllegalArgumentException("이미 존재하는 사용자명입니다.");
-        }
-
-        Member member = Member.builder()
-                .username(request.getUsername())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role("ROLE_USER")
-                .build();
-
-        memberRepository.save(member);
+        // 빈칸
     }
 
     @Transactional(readOnly = true)
     public TokenResponse login(LoginRequest request) {
-        Member member = memberRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
-
-        if (!passwordEncoder.matches(request.getPassword(), member.getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-        }
-
-        String token = jwtUtil.generateToken(member.getUsername(), member.getRole());
-        return new TokenResponse(token);
+        // 빈칸
     }
 
     @Transactional(readOnly = true)
     public MemberInfoResponse getMyInfo(String username) {
-        Member member = memberRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
-
-        return new MemberInfoResponse(member.getUsername(), member.getRole());
+        // 빈칸
     }
 }
