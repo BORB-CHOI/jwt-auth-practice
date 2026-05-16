@@ -26,10 +26,12 @@ public class AuthService {
             throw new IllegalArgumentException("이미 존재하는 사용자입니다: " + request.getUsername());
         }
 
+        String role = request.isAdmin() ? "ADMIN" : "USER";
+
         Member member = Member.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role("USER")
+                .role(role)
                 .build();
 
         memberRepository.save(member);

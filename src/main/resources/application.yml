@@ -19,3 +19,8 @@ jwt:
 
 server:
   port: 8080
+
+logging:
+  level:
+    com.likelion.jwt: DEBUG
+    org.springframework.security.web.access: DEBUG
