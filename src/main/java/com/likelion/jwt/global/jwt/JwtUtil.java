@@ -21,22 +21,38 @@ public class JwtUtil {
     private long expiration;
 
     public String generateToken(String username, String role) {
-        // 빈칸
+        return Jwts.builder()
+                .subject(username)
+                .claim("role", role)
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(getSigningKey())
+                .compact();
     }
 
     public String getUsername(String token) {
-        // 빈칸
+        return getClaims(token).getSubject();
     }
 
     public boolean isValid(String token) {
-        // 빈칸
+        try {
+            getClaims(token);
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
     }
 
     private Claims getClaims(String token) {
-        // 빈칸
+        return Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
     }
 
     private SecretKey getSigningKey() {
-        // 빈칸
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 }
